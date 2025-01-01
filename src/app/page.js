@@ -1,4 +1,26 @@
-const Home = () => {
-  return <div>Home</div>;
+import CardMovie from "@/components/CardMovie";
+import { tmbdConfig } from "./lib/config";
+
+const Home = async ({ searchParams }) => {
+  const genre = searchParams?.genre || "fetchTrending";
+  const res = await fetch(
+    `${tmbdConfig.endPointUrl}${genre === "fetchTopRated" ? "/movie/top_rated" : "/trending/all/week"}?api_key=${tmbdConfig.apiKey}&language=en-US&page=1`
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  const { results } = data;
+
+  return (
+    <div>
+      {results.map((movie) => (
+        <CardMovie movie={movie} key={movie.id} />
+      ))}
+    </div>
+  );
 };
 export default Home;
