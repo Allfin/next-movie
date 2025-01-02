@@ -1,8 +1,8 @@
-import CardMovie from "@/components/CardMovie";
+import Results from "@/components/Results";
 import { tmbdConfig } from "./lib/config";
 
 const Home = async ({ searchParams }) => {
-  const genre = searchParams?.genre || "fetchTrending";
+  const genre = (await searchParams).genre || "fetchTrending";
   const res = await fetch(
     `${tmbdConfig.endPointUrl}${genre === "fetchTopRated" ? "/movie/top_rated" : "/trending/all/week"}?api_key=${tmbdConfig.apiKey}&language=en-US&page=1`,
     { next: { revalidate: 10000 } }
@@ -18,9 +18,7 @@ const Home = async ({ searchParams }) => {
 
   return (
     <div>
-      {results.map((movie) => (
-        <CardMovie movie={movie} key={movie.id} />
-      ))}
+      <Results results={results} />
     </div>
   );
 };
