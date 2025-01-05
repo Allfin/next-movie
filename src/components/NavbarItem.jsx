@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 const NavbarItem = ({ title, param }) => {
   const searchParams = useSearchParams();
-  const genre = searchParams.get("genre");
+  const genre = searchParams.get("genre") || "fetchTrending";
 
   return (
     <div>

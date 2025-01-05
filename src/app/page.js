@@ -4,7 +4,7 @@ import { tmbdConfig } from "./lib/config";
 const Home = async ({ searchParams }) => {
   const genre = (await searchParams).genre || "fetchTrending";
   const res = await fetch(
-    `${tmbdConfig.endPointUrl}${genre === "fetchTopRated" ? "/movie/top_rated" : "/trending/all/week"}?api_key=${tmbdConfig.apiKey}&language=en-US&page=1`,
+    `${tmbdConfig.endPointUrl}${genre === "fetchTopRated" ? "/movie/top_rated" : "/trending/movie/week"}?api_key=${tmbdConfig.apiKey}&language=en-US&page=1`,
     { next: { revalidate: 10000 } }
   );
 
